@@ -1,3 +1,25 @@
+
+
+
+<h2>Details</h2>
 <div>
-  detail
+  <ul class="books">
+    <li *ngFor="let author of this.authorArray" 
+        [class.selected]="author === selectedAuthor" 
+        (click)="onSelect(author)">
+      <span class="badge">{{author.name}}</span>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="selectedAuthor">
+  <h2>{{selectedAuthor.name}} : Details</h2>
+  <div>
+    <label> title:
+      <input [(ngModel)]="selectedAuthor.name" placeholder="name">
+    </label>
+    <label> author:
+      <input [(ngModel)]="selectedAuthor.name" placeholder="name">
+    </label>
+  </div>
 </div>

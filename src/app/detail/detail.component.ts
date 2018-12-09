@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from '../global.service';
+import { Author } from '../author';
 
 @Component({
   selector: 'app-detail',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailComponent implements OnInit {
 
-  constructor() { }
+  selectedAuthor: Author;
+
+  authorArray = [];
+
+  constructor(private gs: GlobalService) { }
 
   ngOnInit() {
+    this.getAuthorJson();
+  }
+
+  getAuthorJson() {
+    console.log(this.gs.getAuthors());
+    this.gs.getAuthors().subscribe(
+      (author) => {
+        this.authorArray = author;
+      }
+    );
+  }
+
+  onSelect (author: Author) {
+    this.selectedAuthor = author;
   }
 
 }

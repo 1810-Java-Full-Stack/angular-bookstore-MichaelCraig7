@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
 import { Book } from '../book';
 import { BOOKS } from '../books';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-list',
@@ -10,30 +10,27 @@ import { BOOKS } from '../books';
 })
 export class ListComponent implements OnInit {
 
-  // books = ['book1', 'book2', 'book3', 'book4'];
+  // books1 = ['book1', 'book2', 'book3', 'book4'];
 
   books = BOOKS;
   selectedBook: Book;
-
-  book: Book = {
-    id: 'will',
-    bTitle: 'Book1'
-  };
+  bookArray = [];
 
   onSelect(book: Book): void {
     this.selectedBook = book;
   }
 
-  constructor() { }
+  constructor(private gs: GlobalService) { }
 
-  ngOnInit() {
-    // let id = 0;
-    // this.books.map(book => {
-    //   $('#bookList').append(`
-    //     <div><button (click)="test()">${book}</button></div>
-    //   `);
-    //   id++;
-    // });
+  getBookJson() {
+    this.gs.getBooks().subscribe(
+      (book) => {
+        this.bookArray = book;
+      }
+    );
   }
 
+  ngOnInit() {
+    this.getBookJson();
+  }
 }
